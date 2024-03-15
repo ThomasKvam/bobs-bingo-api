@@ -1,9 +1,8 @@
 # Bobs Bingo Api 
 ### Members: Sander, Steven, Thomas
 
-Endpoints
+| Endpoints | Post | Get | Delete | Put | 
+|----------|----------|----------|----------|----------|
+| Users | ✓  | ✓ | X | ✓ |
+| Leaderboard | ✓ | ✓ | X | ✓ |
 
-                Post         Get          Delete         Put
-Users            ✓            ✓             X            ✓
-
-Leaderboard      ✓            ✓             X            ✓
