@@ -1,0 +1,6 @@
+Endpoints
+
+                Post         Get         Delete         Put
+Users            O            O             X            O
+
+Leaderboard      O            O             X            O
