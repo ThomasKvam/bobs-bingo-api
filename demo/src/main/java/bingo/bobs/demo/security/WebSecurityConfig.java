@@ -59,7 +59,11 @@ public class WebSecurityConfig {
                 .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/users").permitAll()
                         .requestMatchers(HttpMethod.GET,"/leaderboard","/leaderboard/**").hasRole("USER")
+                        .requestMatchers(HttpMethod.POST,"/leaderboard","/leaderboard/**").hasRole("USER")
+                        .requestMatchers(HttpMethod.PUT,"/leaderboard","/leaderboard/**").hasRole("USER")
+
                         .requestMatchers("/leaderboard", "/leaderboard/**").hasRole("MODERATOR")
                 );
         http.authenticationProvider(this.authenticationProvider());

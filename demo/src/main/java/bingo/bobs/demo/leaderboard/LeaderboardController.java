@@ -26,16 +26,16 @@ public class LeaderboardController {
         return new ResponseEntity<>(new LeaderboardListResponse(this.leaderboardRepository.findAll()), HttpStatus.OK);
     }
 
-//    @GetMapping("{id}")
-//    public ResponseEntity<Response> getUser (@PathVariable int id) {
-//        Leaderboard leaderboard = this.leaderboardRepository
-//                .findById(id)
-//                .orElse(null);
-//        if (leaderboard == null) {
-//            return new ResponseEntity<>(new ErrorResponse(new Error("Leaderboard not found")), HttpStatus.NOT_FOUND);
-//        }
-//        return new ResponseEntity<>(new LeaderboardResponse(leaderboard), HttpStatus.OK);
-//    }
+    @GetMapping("{id}")
+    public ResponseEntity<Response> getScore (@PathVariable int id) {
+        Leaderboard leaderboard = this.leaderboardRepository
+                .findById(id)
+                .orElse(null);
+        if (leaderboard == null) {
+            return new ResponseEntity<>(new ErrorResponse(new Error("Leaderboard not found")), HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(new LeaderboardResponse(leaderboard), HttpStatus.OK);
+    }
 
     @PostMapping("{userId}")
     public ResponseEntity<Response> createLeaderboard (@PathVariable int userId, @RequestBody Leaderboard leaderboard) {
