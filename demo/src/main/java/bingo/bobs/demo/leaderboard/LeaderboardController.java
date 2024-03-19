@@ -27,14 +27,16 @@ public class LeaderboardController {
         return new ResponseEntity<>(new LeaderboardListResponse(this.leaderboardRepository.findAll()), HttpStatus.OK);
     }
 
-    @GetMapping("{id}")
-    public ResponseEntity<Response> getScore (@PathVariable int id) {
-        Leaderboard leaderboard = this.leaderboardRepository
-                .findById(id)
+    @GetMapping("{userId}")
+    public ResponseEntity<Response> getScore (@PathVariable int userId) {
+        User user = this.userRepository
+                .findById(userId)
                 .orElse(null);
-        if (leaderboard == null) {
-            return new ResponseEntity<>(new ErrorResponse(new Error("Leaderboard not found")), HttpStatus.NOT_FOUND);
+        if (user == null) {
+            return new ResponseEntity<>(new ErrorResponse(new Error("User not found")), HttpStatus.NOT_FOUND);
         }
+
+        Leaderboard leaderboard = leaderboardRepository.findByUser(user);
         return new ResponseEntity<>(new LeaderboardResponse(leaderboard), HttpStatus.OK);
     }
 
@@ -64,19 +66,20 @@ public class LeaderboardController {
 //    }
 
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Response> updateLeaderboard (@PathVariable int id, @RequestBody Leaderboard leaderboard) {
+    @PutMapping("{userId}")
+    public ResponseEntity<Response> updateLeaderboard (@PathVariable int userId, @RequestBody Leaderboard score) {
 
-        Leaderboard scoreToUpdate = this.leaderboardRepository
-                .findById(id)
+        User user = this.userRepository
+                .findById(userId)
                 .orElse(null);
-        if(scoreToUpdate == null) {
+        if(user == null) {
             return new ResponseEntity<>(new ErrorResponse(new Error("User not found")), HttpStatus.NOT_FOUND);
         }
+        Leaderboard leaderboard = leaderboardRepository.findByUser(user);
 
-        scoreToUpdate.setScore(leaderboard.getScore());
-        this.leaderboardRepository.save(scoreToUpdate);
-        return new ResponseEntity<>(new LeaderboardResponse(scoreToUpdate), HttpStatus.OK);
+        leaderboard.setScore(score.getScore());
+        this.leaderboardRepository.save(leaderboard);
+        return new ResponseEntity<>(new LeaderboardResponse(leaderboard), HttpStatus.OK);
     }
 
 }
