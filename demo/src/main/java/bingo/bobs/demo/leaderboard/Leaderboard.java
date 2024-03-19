@@ -21,6 +21,7 @@ public class Leaderboard {
     @JoinColumn(name = "user_id", nullable= false)
     private User user;
 
+    @Column
     private int score;
 
     public Leaderboard(int score) {
