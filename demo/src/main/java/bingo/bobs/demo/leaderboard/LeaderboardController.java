@@ -42,9 +42,14 @@ public class LeaderboardController {
 
     @PostMapping("{userId}")
     public ResponseEntity<Response> createLeaderboard (@PathVariable int userId, @RequestBody Leaderboard leaderboard) {
+
         User user = this.userRepository
                 .findById(userId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No user found"));
+
+        if (leaderboardRepository.findByUser(user) != null) {
+            return new ResponseEntity<>(new ErrorResponse(new Error("User already exists in leaderboard")), HttpStatus.BAD_REQUEST);
+        }
 
         leaderboard.setUser(user);
         this.leaderboardRepository.save(leaderboard);
@@ -75,6 +80,7 @@ public class LeaderboardController {
         if(user == null) {
             return new ResponseEntity<>(new ErrorResponse(new Error("User not found")), HttpStatus.NOT_FOUND);
         }
+
         Leaderboard leaderboard = leaderboardRepository.findByUser(user);
 
         leaderboard.setScore(score.getScore());
