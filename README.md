@@ -6,3 +6,4 @@
 | Users | ✓  | ✓ | X | ✓ |
 | Leaderboard | ✓ | ✓ | X | ✓ |
 
+![Enitity Relations diagram](Copy%20of%20bobs-bingo.drawio.png)
